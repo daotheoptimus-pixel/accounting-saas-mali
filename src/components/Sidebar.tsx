@@ -1,10 +1,19 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useAuthStore } from '@/stores/authStore';
+import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <aside className="sidebar">
@@ -39,12 +48,21 @@ function Sidebar() {
           to="/reports"
           className={`nav-link ${isActive('/reports') ? 'active' : ''}`}
         >
-          📈 Rapports
+          📊 Rapports
         </Link>
       </nav>
 
       <div className="sidebar-footer">
-        <button className="logout-btn">Se déconnecter</button>
+        <div className="user-info">
+          <div className="user-avatar">{user?.name[0]?.toUpperCase()}</div>
+          <div className="user-details">
+            <p className="user-name">{user?.name}</p>
+            <p className="user-email">{user?.email}</p>
+          </div>
+        </div>
+        <button className="logout-btn" onClick={handleLogout}>
+          Se déconnecter
+        </button>
       </div>
     </aside>
   );
