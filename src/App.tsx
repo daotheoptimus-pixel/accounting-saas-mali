@@ -1,1 +1,25 @@
-import React, { useEffect } from 'react';\nimport { View } from 'react-native';\nimport { storageService } from '@/services/storageService';\nimport { syncService } from '@/services/syncService';\nimport SplashScreen from '@/screens/SplashScreen';\n\n// This would be your main App component\n// Setup initialization for the entire app\n\nconst AppRoot: React.FC = () => {\n  const [isReady, setIsReady] = React.useState(false);\n\n  useEffect(() => {\n    async function initializeApp() {\n      try {\n        // Initialize storage\n        await storageService.initialize();\n\n        // Initialize sync service\n        await syncService.initialize();\n\n        setIsReady(true);\n      } catch (error) {\n        console.error('Failed to initialize app:', error);\n        // Fall back to app even if initialization fails\n        setIsReady(true);\n      }\n    }\n\n    initializeApp();\n  }, []);\n\n  if (!isReady) {\n    return <SplashScreen onFinish={() => setIsReady(true)} />;\n  }\n\n  // Return your main app navigation here\n  return (\n    <View style={{ flex: 1 }}>\n      {/* Your app content */}\n    </View>\n  );\n};\n\nexport default AppRoot;\n
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
+import Invoices from './pages/Invoices';
+import Expenses from './pages/Expenses';
+import Clients from './pages/Clients';
+import Reports from './pages/Reports';
+
+function App() {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/invoices" element={<Invoices />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/reports" element={<Reports />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
+}
+
+export default App;

@@ -1,0 +1,44 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+.nyc_output/
+coverage/
+.jest_cache/
+.vitest/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+logs/
+*.log
